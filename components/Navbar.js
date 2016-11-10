@@ -11,7 +11,7 @@ export default class Navbar extends Component {
     return (
       <nav className='navbar navbar-light bg-faded'>
         <div className='container-fluid'>
-          <a className="navbar-brand" href="#">JWT User Login</a>
+          <a className="navbar-brand" href="#">Cats R Assholes</a>
            <div className='navbar-form form-inline pull-xs-right'>
            {!isAuthenticated &&
              <Login
