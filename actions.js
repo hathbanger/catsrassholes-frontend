@@ -76,7 +76,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://localhost:1323/login', config)
+    return fetch('http://api.catsrassholes.com/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -122,7 +122,7 @@ export function signUp(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://localhost:1323/user', config)
+    return fetch('http://api.catsrassholes.com/user', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
