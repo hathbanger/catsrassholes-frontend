@@ -9,7 +9,7 @@ export default class Home extends Component {
     const { dispatch, isAuthenticated, errorMessage } = this.props
     return (
       <div className="container">
-        <div className="col-md-8 col-md-offset-2">
+        <div className="col-md-6 col-md-offset-3">
           {!isAuthenticated &&
             <div>
               <Feed dispatch={dispatch} />
