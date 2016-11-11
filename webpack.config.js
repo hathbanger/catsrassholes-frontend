@@ -23,10 +23,9 @@ module.exports = {
       loaders: [ 'babel' ],
       exclude: /node_modules/,
       include: __dirname
-    }, {
-      test: /\.css?$/,
-      loaders: [ 'style', 'raw' ],
-      include: __dirname
-    }]
+    }, 
+     {test: /\.css$/, loader: 'style!css'},
+     {test: /\.(otf|eot|svg|ttf|woff|woff2).*$/, loader: 'url?limit=8192'}
+    ]
   }
 }

@@ -17,6 +17,13 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 
 
+export const LIKE_REQUEST = 'LIKE_REQUEST'
+export const LIKE_SUCCESS = 'LIKE_SUCCESS'
+export const LIKE_FAILURE = 'LIKE_FAILURE'
+
+
+
+
 function requestLogin(creds) {
   return {
     type: LOGIN_REQUEST,
@@ -62,6 +69,28 @@ function receiveLogout() {
     isAuthenticated: false
   }
 }
+
+
+
+function requestLike(creds) {
+  return {
+    type: LIKE_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    creds
+  }
+}
+
+
+function likeError(message) {
+  return {
+    type: LIKE_FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    message
+  }
+}
+
 
 // Calls the API to get a token and
 // dispatches actions along the way
@@ -146,21 +175,37 @@ export function signUp(creds) {
 }
 
 
-// function updateState(connection){
-//   return {
-//     type: WS_SUCCESS,
-//     connection: connection
-//   }
-// }
+function updateState(connection){
+  console.log("LIKING PICTURE WITH ID:", connection.pic_id)
+  return {
+    type: LIKE_SUCCESS,
+    connection: connection
+  }
+}
 
-// // Uses the API middlware to get a quote
-// export function connectWebsocket() {
-//   let connection = new WebSocket('ws://localhost:1323/ws');
-  
-//   return dispatch => {
-//     dispatch(updateState(connection))
-//   }
+// Uses the API middlware to get a quote
+export function likePost(creds) {
   
   
-// }
+  return dispatch => {
+    dispatch(requestLogin(creds))
+
+    return fetch('http://api.catsrassholes.com/', config)
+      .then(response =>
+        response.json()
+        .then(user => ({user, response})))
+        .then(({user, response}) => {
+          if (!response.ok) {
+            dispatch(likeError(like.message))
+            return Promise.reject(like)
+          }
+          else {
+            dispatch 
+          }
+        })
+    dispatch(updateState(creds))
+  }
+  
+  
+}
 

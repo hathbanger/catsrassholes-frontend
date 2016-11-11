@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import SocialBar from './SocialBar'
+import { likePost } from '../actions'
 
 export default class FeedItem extends Component {
   
@@ -13,12 +14,12 @@ export default class FeedItem extends Component {
                   <h5>{this.props.feedItem.body}</h5>
                 </div>
                 <div className="row">
-                  <div class="text-md-center">
-                    <img  className="img-thumbnail" style={{width: "100%"}} src={this.props.feedItem.pic} />
+                  <div className="text-md-center">
+                    <img  className="" style={{width: "100%"}} src={this.props.feedItem.pic} />
                   </div>
                 </div>
+                <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } />
               </li>
-              <SocialBar dispatch={dispatch} />
             </div>
 
     )
