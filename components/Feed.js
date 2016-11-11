@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import FeedItem from './FeedItem'
-import catPics from './catPics'
+import catPics from '../catPics'
 
 
 export default class Feed extends Component {

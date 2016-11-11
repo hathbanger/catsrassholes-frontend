@@ -13,15 +13,7 @@ export default class Navbar extends Component {
         <div className='container-fluid'>
           <a className="navbar-brand" href="#">Cats R Assholes</a>
            <div className='navbar-form form-inline pull-xs-right'>
-           {!isAuthenticated &&
-             <Login
-               errorMessage={errorMessage}
-               onLoginClick={ creds => dispatch(loginUser(creds)) }
-             />
-           }
-           {isAuthenticated &&
-             <Logout onLogoutClick={() => dispatch(logoutUser())} />
-           }
+
          </div>
        </div>
      </nav>
@@ -35,3 +27,13 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
 }
+
+           // {!isAuthenticated &&
+           //   <Login
+           //     errorMessage={errorMessage}
+           //     onLoginClick={ creds => dispatch(loginUser(creds)) }
+           //   />
+           // }
+           // {isAuthenticated &&
+           //   <Logout onLogoutClick={() => dispatch(logoutUser())} />
+           // }
