@@ -190,7 +190,7 @@ export function likePost(creds) {
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
     body: `post_id=${creds.post_id}}`
   }
-  
+
   return dispatch => {
     dispatch(requestLogin(creds))
 
