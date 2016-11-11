@@ -185,7 +185,11 @@ function updateState(connection){
 
 // Uses the API middlware to get a quote
 export function likePost(creds) {
-  
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `post_id=${creds.post_id}}`
+  }
   
   return dispatch => {
     dispatch(requestLogin(creds))

@@ -12,9 +12,9 @@ export default class Navbar extends Component {
       <nav className='navbar navbar-light bg-faded'>
         <div className='container-fluid'>
           <a className="navbar-brand" href="#">Cats R Assholes</a>
-           <div className='navbar-form form-inline pull-xs-right'>
+          <div className='navbar-form form-inline pull-xs-right'>
 
-         </div>
+          </div>
        </div>
      </nav>
     )
