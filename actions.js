@@ -23,6 +23,18 @@ export const LIKE_FAILURE = 'LIKE_FAILURE'
 
 
 
+export const FILE_REQUEST = 'FILE_REQUEST'
+export const FILE_SUCCESS = 'FILE_SUCCESS'
+export const FILE_FAILURE = 'FILE_FAILURE'
+
+
+
+export const POST_REQUEST = 'POST_REQUEST'
+export const POST_SUCCESS = 'POST_SUCCESS'
+export const POST_FAILURE = 'POST_FAILURE'
+
+
+
 
 function requestLogin(creds) {
   return {
@@ -175,6 +187,8 @@ export function signUp(creds) {
 }
 
 
+
+
 function updateState(connection){
   console.log("LIKING PICTURE WITH ID:", connection.pic_id)
   return {
@@ -194,7 +208,7 @@ export function likePost(creds) {
   return dispatch => {
     dispatch(requestLogin(creds))
 
-    return fetch('http://api.catsrassholes.com/', config)
+    return fetch('http://localhost:1323/', config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -209,7 +223,94 @@ export function likePost(creds) {
         })
     dispatch(updateState(creds))
   }
-  
-  
+}
+
+export function fetchPosts() {
+  return dispatch => {
+    dispatch(postsRequest())
+    return fetch('http://localhost:1323/post/all')
+    .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        dispatch(postsSuccess(json))
+      });
+  }
+}
+
+function postsRequest(data){
+  console.log('data', data)
+  return {
+    type: POST_REQUEST,
+    posts: data
+  }
+}
+
+
+function postsSuccess(data){
+  console.log('data', data)
+  return {
+    type: POST_SUCCESS,
+    posts: data
+  }
+}
+
+
+
+
+function uploadRequest(data){
+  console.log('data', data)
+  return {
+    type: FILE_REQUEST,
+    files: data
+  }
+}
+
+function uploadAction(data){
+  console.log("Uploading File:", data)
+  return {
+    type: FILE_SUCCESS,
+    files: data
+  }
+}
+
+function uploadError(file){
+  return {
+    type: FILE_FAILURE
+  }
+}
+
+
+export function uploadFile(file) {
+  return dispatch => {
+    dispatch(uploadRequest(file))
+  }
+}
+
+
+export function createPost(post) {
+  console.log('upload file!', post)
+  var data = new FormData()
+  data.append('file', post.file)
+  data.append('title', post.title)
+  data.append('body', post.body)
+  console.log(data)
+  let config = {
+    method: 'post',
+    body: data
+  }
+  return dispatch => {
+    dispatch(uploadAction(post))
+    return fetch('http://localhost:1323/post/create', config)
+    .then(response => {
+          if (!response.ok) {
+            dispatch(uploadError(response))
+            return Promise.reject(response)
+          }
+          else {
+            dispatch(uploadAction(config))
+            console.log('success!') 
+          }
+        })
+  }
 }
 

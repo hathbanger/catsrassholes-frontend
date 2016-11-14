@@ -8,7 +8,7 @@ import Home from '../components/Home'
 class App extends Component {
   
   render() {
-    const { dispatch,  isAuthenticated, errorMessage } = this.props
+    const { dispatch,  isAuthenticated, errorMessage, posts } = this.props
     
     return (
       <div>
@@ -20,6 +20,7 @@ class App extends Component {
         <Home
           dispatch={dispatch}
           isAuthenticated={isAuthenticated}
+          posts={posts}
         />
       </div>
     )
@@ -27,6 +28,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+  posts: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
@@ -34,11 +36,13 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   
-  const { auth } = state
+  const { auth, upload, postFetch } = state
   const { isAuthenticated, errorMessage } = auth
+  const { posts } = postFetch
   
   return {
     isAuthenticated,
+    posts,
     errorMessage
   }
 }

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { 
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, FILE_SUCCESS, POST_SUCCESS
 } from './actions'
 
 // The auth reducer. The starting state sets authentication
@@ -42,11 +42,50 @@ function auth(state = {
       return state
     }
 }
+// The auth reducer. The starting state sets authentication
+// based on a token being in local storage. In a real app,
+// we would also want a util to check if the token is expired.
+function upload(state = {
+    files: null
+  }, action) {
+  switch (action.type) {
+    case FILE_SUCCESS:
+    console.log('upload', action)
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        files: action
+      })
+    default:
+      return state
+    }
+}
+
+// The auth reducer. The starting state sets authentication
+// based on a token being in local storage. In a real app,
+// we would also want a util to check if the token is expired.
+function postFetch(state = {
+    posts: null
+  }, action) {
+  switch (action.type) {
+    case POST_SUCCESS:
+    console.log('posts', action)
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        posts: action.posts
+      })
+    default:
+      return state
+    }
+}
 
 // We combine the reducers here so that they
 // can be left split apart above
 const userLogin = combineReducers({
-  auth
+  auth,
+  upload,
+  postFetch
 })
 
 export default userLogin

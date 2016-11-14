@@ -21,7 +21,6 @@ export default class FeedItem extends Component {
                 <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } />
               </li>
             </div>
-
     )
   }
 
