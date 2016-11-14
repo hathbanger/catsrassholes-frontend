@@ -208,7 +208,7 @@ export function likePost(creds) {
   return dispatch => {
     dispatch(requestLogin(creds))
 
-    return fetch('http://localhost:1323/', config)
+    return fetch('http://api.catsrassholes.com/', config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -228,7 +228,7 @@ export function likePost(creds) {
 export function fetchPosts() {
   return dispatch => {
     dispatch(postsRequest())
-    return fetch('http://localhost:1323/post/all')
+    return fetch('http://api.catsrassholes.com/post/all')
     .then(response => response.json())
       .then(json => {
         console.log(json);
@@ -300,7 +300,7 @@ export function createPost(post) {
   }
   return dispatch => {
     dispatch(uploadAction(post))
-    return fetch('http://localhost:1323/post/create', config)
+    return fetch('http://api.catsrassholes.com/post/create', config)
     .then(response => {
           if (!response.ok) {
             dispatch(uploadError(response))

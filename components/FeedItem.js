@@ -15,7 +15,7 @@ export default class FeedItem extends Component {
                 </div>
                 <div className="row">
                   <div className="text-md-center">
-                    <img  className="" style={{width: "100%"}} src={this.props.feedItem.pic} />
+                    <img  className="" style={{width: "100%"}} src={this.props.feedItem.imgurl} />
                   </div>
                 </div>
                 <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } />
