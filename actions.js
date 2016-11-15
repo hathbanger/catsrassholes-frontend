@@ -117,7 +117,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://api.catsrassholes.com/login', config)
+    return fetch('http://localhost:1323/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -163,7 +163,7 @@ export function signUp(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://api.catsrassholes.com/user', config)
+    return fetch('http://localhost:1323/user', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -208,7 +208,7 @@ export function likePost(creds) {
   return dispatch => {
     dispatch(requestLogin(creds))
 
-    return fetch('http://api.catsrassholes.com/', config)
+    return fetch('http://localhost:1323/', config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -228,11 +228,11 @@ export function likePost(creds) {
 export function fetchPosts() {
   return dispatch => {
     dispatch(postsRequest())
-    return fetch('http://api.catsrassholes.com/post/all')
+    return fetch('http://localhost:1323/post/all')
     .then(response => response.json())
       .then(json => {
         console.log(json);
-        dispatch(postsSuccess(json))
+        dispatch(postsSuccess(json.reverse()))
       });
   }
 }
@@ -300,7 +300,7 @@ export function createPost(post) {
   }
   return dispatch => {
     dispatch(uploadAction(post))
-    return fetch('http://api.catsrassholes.com/post/create', config)
+    return fetch('http://localhost:1323/post/create', config)
     .then(response => {
           if (!response.ok) {
             dispatch(uploadError(response))
