@@ -30,7 +30,6 @@ export default class Home extends Component {
       </div>
     )
   }
-
 }
 
 Home.propTypes = {

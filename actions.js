@@ -35,6 +35,12 @@ export const POST_FAILURE = 'POST_FAILURE'
 
 
 
+export const FETCH_REQUEST = 'FETCH_REQUEST'
+export const FETCH_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_FAILURE = 'FETCH_FAILURE'
+
+
+
 
 function requestLogin(creds) {
   return {
@@ -117,7 +123,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('https://api.catsrassholes.com/login', config)
+    return fetch('http://localhost:1323/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -163,7 +169,7 @@ export function signUp(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('https://api.catsrassholes.com/user', config)
+    return fetch('http://localhost:1323/user', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -200,45 +206,73 @@ function updateState(connection){
 // Uses the API middlware to get a quote
 export function likePost(creds) {
   let config = {
-    method: 'POST',
-    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-    body: `post_id=${creds.post_id}}`
+    method: 'POST'
   }
-
   return dispatch => {
-    dispatch(requestLogin(creds))
-
-    return fetch('https://api.catsrassholes.com/', config)
+    dispatch(requestLike(creds))
+    // dispatch(fetchPosts())
+    console.log('http://localhost:1323/post/like/' + creds, config)
+    return fetch('http://localhost:1323/post/like/' + creds, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
         .then(({user, response}) => {
           if (!response.ok) {
-            dispatch(likeError(like.message))
-            return Promise.reject(like)
+            console.log("response: ",response)
+            dispatch(likeError(response))
+            return Promise.reject(response)
           }
           else {
-            dispatch 
+            dispatch(fetchPosts()) 
           }
         })
-    dispatch(updateState(creds))
+  }
+}
+
+// Uses the API middlware to get a quote
+export function deletePost(creds) {
+  let config = {
+    method: 'POST'
+  }
+  return dispatch => {
+    dispatch(requestLogin(creds))
+    // dispatch(fetchPosts())
+    console.log('http://localhost:1323/post/delete/' + creds, config)
+    return fetch('http://localhost:1323/post/delete/' + creds, config)
+      .then(response =>
+        response.json()
+        .then(user => ({user, response})))
+        .then(({user, response}) => {
+          if (!response.ok) {
+            dispatch(likeError(response))
+            return Promise.reject(response)
+          }
+          else {
+            dispatch(fetchPosts()) 
+          }
+        })
   }
 }
 
 export function fetchPosts() {
   return dispatch => {
+    dispatch(fetchRequest())
     dispatch(postsRequest())
-    return fetch('https://api.catsrassholes.com/post/all')
+    return fetch('http://localhost:1323/post/all')
     .then(response => response.json())
       .then(json => {
-        console.log(json);
-        dispatch(postsSuccess(json.reverse()))
+        if(json.length == 0){
+          dispatch(fetchFailure(json))
+          console.log('not ok')
+        } else {
+          dispatch(fetchSuccess(json))
+          dispatch(postsSuccess(json.reverse()))
+        }
       });
   }
 }
 
 function postsRequest(data){
-  console.log('data', data)
   return {
     type: POST_REQUEST,
     posts: data
@@ -247,7 +281,6 @@ function postsRequest(data){
 
 
 function postsSuccess(data){
-  console.log('data', data)
   return {
     type: POST_SUCCESS,
     posts: data
@@ -255,10 +288,33 @@ function postsSuccess(data){
 }
 
 
+function fetchRequest(data){
+  return {
+    type: FETCH_REQUEST,
+    isFetching: true,
+    data: data
+  }
+}
+
+function fetchSuccess(data){
+  return {
+    type: FETCH_SUCCESS,
+    isFetching: false,
+    data: data
+  }
+}
+
+function fetchFailure(message){
+  return {
+    type: FETCH_REQUEST,
+    isFetching: false,
+    message
+  } 
+}
+
 
 
 function uploadRequest(data){
-  console.log('data', data)
   return {
     type: FILE_REQUEST,
     files: data
@@ -266,7 +322,6 @@ function uploadRequest(data){
 }
 
 function uploadAction(data){
-  console.log("Uploading File:", data)
   return {
     type: FILE_SUCCESS,
     files: data
@@ -288,27 +343,27 @@ export function uploadFile(file) {
 
 
 export function createPost(post) {
-  console.log('upload file!', post)
   var data = new FormData()
   data.append('file', post.file)
   data.append('title', post.title)
   data.append('body', post.body)
-  console.log(data)
   let config = {
     method: 'post',
     body: data
   }
   return dispatch => {
     dispatch(uploadAction(post))
-    return fetch('https://api.catsrassholes.com/post/create', config)
+    dispatch(fetchRequest(post))
+    return fetch('http://localhost:1323/post/create', config)
     .then(response => {
           if (!response.ok) {
             dispatch(uploadError(response))
+            dispatch(fetchFailure(response))
             return Promise.reject(response)
           }
           else {
             dispatch(uploadAction(config))
-            console.log('success!') 
+            dispatch(fetchSuccess(config))
           }
         })
   }

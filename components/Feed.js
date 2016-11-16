@@ -14,7 +14,6 @@ export default class Feed extends Component {
 
   render() {
     const { dispatch, errorMessage, posts } = this.props
-    console.log('this.props.posts', this.props.posts)
     return (
         <ul className="list-group">
           { 

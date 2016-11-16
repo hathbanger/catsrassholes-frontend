@@ -8,20 +8,25 @@ export default class SocialBar extends Component {
 
     return (
             <div>
-                <button type="button" onClick={(event) => this.handleClick(event)} className="btn btn-secondary">
+                <button type="button" onClick={(event) => this.handleLikeClick(event)} className="btn btn-secondary">
                   <Octicon mega name="heart"/>
+                </button>
+                <button type="button" onClick={(event) => this.handleDeleteClick(event)} className="btn btn-secondary">
+                  <Octicon mega name="x"/>
                 </button>
             </div>
 
     )
   }
 
-  handleClick(event) {
-    console.log(this.props)
-    // const username = this.refs.username
-    // const password = this.refs.password
+  handleLikeClick(event) {
     const creds = { pic_id: this.props.pic_id }
-    this.props.onClickLike(creds)
+    this.props.onClickLike(this.props.pic_id)
+  }
+
+  handleDeleteClick(event) {
+    const creds = { pic_id: this.props.pic_id }
+    this.props.onClickDelete(this.props.pic_id)
   }
 
 
@@ -29,7 +34,7 @@ export default class SocialBar extends Component {
 
 
 SocialBar.propTypes = {
-  onClickLike: PropTypes.func.isRequired,
+  onClickDelete: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   errorMessage: PropTypes.string
 }

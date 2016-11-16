@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import SocialBar from './SocialBar'
-import { likePost } from '../actions'
+import { likePost, deletePost } from '../actions'
 
 export default class FeedItem extends Component {
   
   render() {
-    const { dispatch, errorMessage } = this.props
+    const { dispatch, errorMessage, like } = this.props
 
     return (
             <div>
@@ -19,12 +19,11 @@ export default class FeedItem extends Component {
                   </div>
                   <p>{this.props.feedItem.body}</p>
                 </div>
-                <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } />
+                <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } onClickDelete={ creds => dispatch(deletePost(creds)) } />
               </li>
             </div>
     )
   }
-
 }
 
 FeedItem.propTypes = {
