@@ -17,15 +17,17 @@ export default class Home extends Component {
     const { dispatch, isAuthenticated, errorMessage, files, posts } = this.props
     return (
       <div className="container">
-        <div className="col-md-6 col-md-offset-3">
-          {!isAuthenticated &&
-            <div>
-              <Feed posts={this.props.posts} dispatch={dispatch} />
-            </div>          
-          }
-          {isAuthenticated &&
-            <CreatePostContainer dispatch={dispatch} />
-          }
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3 col-sm-12">
+            {!isAuthenticated &&
+              <div>
+                <Feed posts={this.props.posts} dispatch={dispatch} />
+              </div>          
+            }
+            {isAuthenticated &&
+              <CreatePostContainer dispatch={dispatch} />
+            }
+          </div>
         </div>
       </div>
     )
