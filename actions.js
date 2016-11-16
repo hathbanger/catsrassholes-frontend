@@ -123,7 +123,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://localhost:1323/login', config)
+    return fetch('https://api.catsrassholes.com/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -169,7 +169,7 @@ export function signUp(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://localhost:1323/user', config)
+    return fetch('https://api.catsrassholes.com/user', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -211,8 +211,8 @@ export function likePost(creds) {
   return dispatch => {
     dispatch(requestLike(creds))
     // dispatch(fetchPosts())
-    console.log('http://localhost:1323/post/like/' + creds, config)
-    return fetch('http://localhost:1323/post/like/' + creds, config)
+    console.log('https://api.catsrassholes.com/post/like/' + creds, config)
+    return fetch('https://api.catsrassholes.com/post/like/' + creds, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -237,8 +237,8 @@ export function deletePost(creds) {
   return dispatch => {
     dispatch(requestLogin(creds))
     // dispatch(fetchPosts())
-    console.log('http://localhost:1323/post/delete/' + creds, config)
-    return fetch('http://localhost:1323/post/delete/' + creds, config)
+    console.log('https://api.catsrassholes.com/post/delete/' + creds, config)
+    return fetch('https://api.catsrassholes.com/post/delete/' + creds, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -258,7 +258,7 @@ export function fetchPosts() {
   return dispatch => {
     dispatch(fetchRequest())
     dispatch(postsRequest())
-    return fetch('http://localhost:1323/post/all')
+    return fetch('https://api.catsrassholes.com/post/all')
     .then(response => response.json())
       .then(json => {
         if(json.length == 0){
@@ -354,7 +354,7 @@ export function createPost(post) {
   return dispatch => {
     dispatch(uploadAction(post))
     dispatch(fetchRequest(post))
-    return fetch('http://localhost:1323/post/create', config)
+    return fetch('https://api.catsrassholes.com/post/create', config)
     .then(response => {
           if (!response.ok) {
             dispatch(uploadError(response))
