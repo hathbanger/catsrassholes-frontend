@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import SignUpContainer from '../containers/SignUpContainer'
 import CreatePostContainer from '../containers/CreatePostContainer'
-import CreatePost from './CreatePost'
 import { uploadPost, uploadFile, fetchPosts } from '../actions'
 import Feed from './Feed'
 
@@ -41,8 +40,3 @@ Home.propTypes = {
 }
 
 
-            // {isAuthenticated &&
-            //   <CreatePostContainer 
-            //     dispatch={dispatch} 
-            //   />
-            // }

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import FeedItem from './FeedItem'
+import CreatePost from './CreatePost'
 import catPics from '../catPics'
 
 
@@ -15,6 +16,10 @@ export default class Feed extends Component {
   render() {
     const { dispatch, errorMessage, posts, isAuthenticated } = this.props
     return (
+      <div>
+        <CreatePost 
+          dispatch={dispatch}
+          />
         <ul className="list-group">
           { 
             (this.props.posts)
@@ -22,6 +27,7 @@ export default class Feed extends Component {
               : <div> Everything in the world is fine </div> 
           }
         </ul>
+      </div>
     )
   }
 

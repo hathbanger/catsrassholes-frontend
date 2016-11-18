@@ -20,7 +20,7 @@ export default class Uploader extends Component {
     return (
             <div>
             
-                <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={(event) => this.onDrop(event)}>
+                <Dropzone ref={(node) => { this.dropzone = node; }}  onDrop={(event) => this.onDrop(event)}>
                     <div>Try dropping some files here, or click to select files to upload.</div>
                 </Dropzone>              
             </div>      
