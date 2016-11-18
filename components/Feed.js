@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import FeedItem from './FeedItem'
-import CreatePost from './CreatePost'
+import CreatePostContainer from '../containers/CreatePostContainer'
 import catPics from '../catPics'
 
 
@@ -18,7 +18,7 @@ export default class Feed extends Component {
     return (
       <div>
         {isAuthenticated &&
-        <CreatePost
+        <CreatePostContainer
           dispatch={dispatch}
           />
         }
