@@ -35,6 +35,12 @@ export const POST_FAILURE = 'POST_FAILURE'
 
 
 
+export const DELETE_REQUEST = 'DELETE_REQUEST'
+export const DELETE_SUCCESS = 'DELETE_SUCCESS'
+export const DELETE_FAILURE = 'DELETE_FAILURE'
+
+
+
 export const FETCH_REQUEST = 'FETCH_REQUEST'
 export const FETCH_SUCCESS = 'FETCH_SUCCESS'
 export const FETCH_FAILURE = 'FETCH_FAILURE'
@@ -90,24 +96,6 @@ function receiveLogout() {
 
 
 
-function requestLike(creds) {
-  return {
-    type: LIKE_REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
-    creds
-  }
-}
-
-
-function likeError(message) {
-  return {
-    type: LIKE_FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
-    message
-  }
-}
 
 
 // Calls the API to get a token and
@@ -210,22 +198,47 @@ export function likePost(creds) {
   }
   return dispatch => {
     dispatch(requestLike(creds))
-    // dispatch(fetchPosts())
-    console.log('https://api.catsrassholes.com/post/like/' + creds, config)
     return fetch('https://api.catsrassholes.com/post/like/' + creds, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
         .then(({user, response}) => {
           if (!response.ok) {
-            console.log("response: ",response)
-            dispatch(likeError(response))
+            dispatch(likeError())
             return Promise.reject(response)
           }
           else {
+            dispatch(likeSuccess()) 
             dispatch(fetchPosts()) 
           }
         })
+  }
+}
+
+
+function requestLike(creds) {
+  return {
+    type: LIKE_REQUEST,
+    isFetching: true,
+    isAuthenticated: false
+    
+  }
+}
+
+
+function likeSuccess() {
+  return {
+    type: LIKE_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
+
+function likeError() {
+  return {
+    type: LIKE_FAILURE,
+    isFetching: false,
+    isAuthenticated: false
   }
 }
 
@@ -235,7 +248,7 @@ export function deletePost(creds) {
     method: 'POST'
   }
   return dispatch => {
-    dispatch(requestLogin(creds))
+    dispatch(deleteRequest(creds))
     // dispatch(fetchPosts())
     console.log('https://api.catsrassholes.com/post/delete/' + creds, config)
     return fetch('https://api.catsrassholes.com/post/delete/' + creds, config)
@@ -244,13 +257,38 @@ export function deletePost(creds) {
         .then(user => ({user, response})))
         .then(({user, response}) => {
           if (!response.ok) {
-            dispatch(likeError(response))
+            dispatch(deleteFailure(response))
             return Promise.reject(response)
           }
           else {
-            dispatch(fetchPosts()) 
+            dispatch(deleteSuccess()) 
           }
         })
+  }
+}
+
+
+function deleteRequest() {
+  return {
+    type: DELETE_REQUEST,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+function deleteSuccess(creds) {
+  return {
+    type: DELETE_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
+
+function deleteFailure(creds) {
+  return {
+    type: DELETE_FAILURE,
+    isFetching: false,
+    isAuthenticated: true
   }
 }
 

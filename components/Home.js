@@ -19,14 +19,13 @@ export default class Home extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-6 col-md-offset-3 col-sm-12">
-            {!isAuthenticated &&
               <div>
-                <Feed posts={this.props.posts} dispatch={dispatch} />
+                <Feed 
+                  posts={this.props.posts} 
+                  isAuthenticated={isAuthenticated} 
+                  dispatch={dispatch} 
+                />
               </div>          
-            }
-            {isAuthenticated &&
-              <CreatePostContainer dispatch={dispatch} />
-            }
           </div>
         </div>
       </div>
@@ -40,3 +39,10 @@ Home.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
 }
+
+
+            // {isAuthenticated &&
+            //   <CreatePostContainer 
+            //     dispatch={dispatch} 
+            //   />
+            // }

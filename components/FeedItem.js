@@ -5,7 +5,7 @@ import { likePost, deletePost } from '../actions'
 export default class FeedItem extends Component {
   
   render() {
-    const { dispatch, errorMessage, like } = this.props
+    const { dispatch, errorMessage, like, isAuthenticated } = this.props
 
     return (
             <div>
@@ -19,7 +19,12 @@ export default class FeedItem extends Component {
                   </div>
                   <p>{this.props.feedItem.body}</p>
                 </div>
-                <SocialBar dispatch={dispatch} pic_id={this.props.feedItem.id} onClickLike={ creds => dispatch(likePost(creds)) } onClickDelete={ creds => dispatch(deletePost(creds)) } />
+                <SocialBar 
+                  dispatch={dispatch} 
+                  pic_id={this.props.feedItem.id} 
+                  isAuthenticated={isAuthenticated}
+                  onClickLike={ creds => dispatch(likePost(creds)) } 
+                  onClickDelete={ creds => dispatch(deletePost(creds)) } />
               </li>
             </div>
     )
@@ -28,5 +33,6 @@ export default class FeedItem extends Component {
 
 FeedItem.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
 }

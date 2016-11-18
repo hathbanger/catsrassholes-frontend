@@ -4,21 +4,21 @@ import catPics from '../catPics'
 
 
 export default class Feed extends Component {
-  renderFeed(dispatch){
+  renderFeed(dispatch, isAuthenticated){
       return (
           this.props.posts.map(function(pic, index){
-            return <FeedItem dispatch={dispatch} key={index}  feedItem={pic} />
+            return <FeedItem dispatch={dispatch} isAuthenticated={isAuthenticated} key={index}  feedItem={pic} />
           })
       );
   }  
 
   render() {
-    const { dispatch, errorMessage, posts } = this.props
+    const { dispatch, errorMessage, posts, isAuthenticated } = this.props
     return (
         <ul className="list-group">
           { 
             (this.props.posts)
-              ? <div> { this.renderFeed(dispatch) } </div> 
+              ? <div> { this.renderFeed(dispatch, isAuthenticated) } </div> 
               : <div> Everything in the world is fine </div> 
           }
         </ul>
@@ -30,5 +30,6 @@ export default class Feed extends Component {
 Feed.propTypes = {
   posts: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
 }

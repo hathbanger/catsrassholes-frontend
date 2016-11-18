@@ -4,16 +4,18 @@ import Octicon from 'react-octicon'
 export default class SocialBar extends Component {
   
   render() {
-    const { dispatch, errorMessage } = this.props
+    const { dispatch, errorMessage, isAuthenticated } = this.props
 
     return (
             <div>
                 <button type="button" onClick={(event) => this.handleLikeClick(event)} className="btn btn-secondary">
                   <Octicon mega name="heart"/>
                 </button>
+              {isAuthenticated &&
                 <button type="button" onClick={(event) => this.handleDeleteClick(event)} className="btn btn-secondary">
                   <Octicon mega name="x"/>
                 </button>
+              }
             </div>
 
     )
@@ -34,6 +36,7 @@ export default class SocialBar extends Component {
 
 
 SocialBar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   onClickDelete: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   errorMessage: PropTypes.string
