@@ -17,9 +17,11 @@ export default class Feed extends Component {
     const { dispatch, errorMessage, posts, isAuthenticated } = this.props
     return (
       <div>
-        <CreatePost 
+        {isAuthenticated &&
+        <CreatePost
           dispatch={dispatch}
           />
+        }
         <ul className="list-group">
           { 
             (this.props.posts)
